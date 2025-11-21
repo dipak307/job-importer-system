@@ -39,7 +39,9 @@ NEXT_PUBLIC_API_JOBS=http://localhost:4000/api/jobs
 // cd client 
 // npm install (it will install all dependency)
 
-//dependency install manually if not get installed
+//dependency install manually if not get installed command 
+// npx create-next-app@latest
+
 // npm i or npm install axios,socket.io-client,swr
 //for styling  npm install @mui/material @emotion/react @emotion/styled
 // frontend starting command 
