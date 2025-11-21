@@ -1,7 +1,4 @@
 
-
-///./redis-server.exe
-
 <!-- git clone https://github.com/dipak307/job-importer-system.git -->
 // cd server
 // npm install     (it will install all dependency)
