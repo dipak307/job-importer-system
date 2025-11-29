@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "cron": "node cron/importCron.js",
     "start": "node index.js",
-    "worker": "node src/workers/jobWorker.js"
+    "worker": "node workers/jobWorker.js"
   },
   "keywords": [],
   "author": "",
