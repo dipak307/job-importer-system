@@ -31,16 +31,15 @@ const fakeRes = () => ({
 
 console.log("Cron service started...");
 
-// cron.schedule("*/10 * * * * *", runImportAllFeeds);
 // PRODUCTION (Run every 1 hour)
 
 cron.schedule("0 * * * *", runImportAllFeeds);
 async function runImportAllFeeds() {
   console.log("🚀 Starting hourly job import for all feeds...");
-
+  
   for (const feedUrl of FEEDS) {
     console.log(`📡 Importing feed → ${feedUrl}`);
-
+    
     try {
       await startImport(fakeReq(feedUrl), fakeRes());
       console.log("Started import for:", feedUrl);
@@ -48,9 +47,19 @@ async function runImportAllFeeds() {
       console.error("Import failed for:", feedUrl, err.message);
     }
   }
-
+  
   console.log("🎉 All feeds queued successfully!");
 }
 
 // ------------------------------------------------------
 setInterval(() => {}, 1 << 30);
+
+
+
+
+
+
+// cron.schedule("*/10 * * * * *", runImportAllFeeds);
+
+
+

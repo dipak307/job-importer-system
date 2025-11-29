@@ -63,3 +63,19 @@ Access the frontend UI:
 
 
 
+# Job Importer System
+
+## Overview
+Scalable job importer that fetches job feeds (XML), converts to JSON, queues jobs into Redis (BullMQ), processes with workers, stores jobs in MongoDB, and records import history.
+
+## Prereqs
+- Node 18+
+- MongoDB (local or Atlas)
+- Redis (local or Redis Cloud)
+- Optional: Docker & Docker Compose
+
+## Setup
+1. Clone:
+```bash
+git clone https://github.com/dipak307/job-importer-system.git
+cd job-importer-system

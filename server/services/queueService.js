@@ -1,13 +1,13 @@
-
-import dotenv from "dotenv";
-dotenv.config();
-
 import { Queue } from "bullmq";
+import IORedis from "ioredis";
 
-const QUEUE_NAME = process.env.QUEUE_NAME || "job-import-queue";
-const connectionOpt = { connection: { connectionString: process.env.REDIS_URL } };
+const redis = new IORedis(process.env.REDIS_URL, {
+  maxRetriesPerRequest: null,   // <--- REQUIRED
+  enableReadyCheck: false       // <--- Prevents blocking
+});
 
-const queue = new Queue(QUEUE_NAME, connectionOpt);
+const queue = new Queue(process.env.QUEUE_NAME || "job-import-queue", {
+  connection: redis,
+});
 
 export default queue;
-

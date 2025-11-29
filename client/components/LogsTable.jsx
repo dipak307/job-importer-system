@@ -32,7 +32,6 @@ export default function LogsTable({ reloadKey }) {
 
   if (error) return <Paper sx={{ p:2 }}>Failed to load logs: {String(error.message)}</Paper>;
   if (!data && isValidating) return <Box sx={{ p:3 }}><CircularProgress /></Box>;
-
   return (
     <Paper sx={{ p:2 }}>
       <Box sx={{ display:'flex', justifyContent:'space-between', alignItems:'center', mb:2 }}>

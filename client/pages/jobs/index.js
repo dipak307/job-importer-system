@@ -18,7 +18,7 @@ export default function JobsList() {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_JOBS}?page=${p}&limit=${limit}&search=${encodeURIComponent(q)}`
       );
-
+      console.log(res.data,"datadata");
       setJobs(res.data.jobs);
       setTotalPages(res.data.totalPages);
       setPage(res.data.page);
@@ -28,7 +28,7 @@ export default function JobsList() {
       alert('Failed to fetch jobs');
     }
   }
-
+console.log(jobs,"jobsjobs");
   useEffect(() => {
     fetchJobs(1, '');
   }, []);

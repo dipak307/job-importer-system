@@ -1,23 +1,51 @@
-import axios from "axios";
-import xml2js from "xml2js";
+// server/src/services/fetcher.js
+import axios from 'axios';
+// import xml2js from 'xml2js';
+import { Parser } from "xml2js";
 
-export default async function fetchFeed(url) {
-  const xml = (await axios.get(url)).data;
-  const json = await xml2js.parseStringPromise(xml, { explicitArray: false });
+// async function fetchFeed(feedUrl) {
+//   const res = await axios.get(feedUrl, { timeout: 15000 });
+//   const xml = res.data;
+//   const parser = new xml2js.Parser({ explicitArray: false, mergeAttrs: true });
+//   const parsed = await parser.parseStringPromise(xml);
+//   // NOTE: feed structures vary. Normalize to an array of job objects.
+//   // This example assumes standard rss -> channel -> item structure.
+//   const items = (parsed.rss && parsed.rss.channel && parsed.rss.channel.item) || [];
+//   const jobs = Array.isArray(items) ? items : [items];
+//   // Normalize fields (map item fields to your Job model)
+//   return jobs.map(item => ({
+//     externalId: item.guid || item.id || item.link || item.title,
+//     title: item.title,
+//     description: item.description,
+//     company: (item['dc:creator'] || item.company) || '',
+//     location: item.location || item['job:location'] || '',
+//     category: item.category || '',
+//     type: item.type || '',
+//     postedAt: item.pubDate ? new Date(item.pubDate) : undefined,
+//     raw: item,
+//   }));
+// }
 
-  let items = [];
+export async function fetchFeed(feedUrl) {
+  try {
+    const res = await axios.get(feedUrl);
 
-  if (json.rss?.channel?.item) items = json.rss.channel.item;
-  if (!Array.isArray(items)) items = [items];
+    const parser = new Parser({
+      explicitArray: false,
+      mergeAttrs: true,
+      strict: false,          // <-- FIX invalid XML
+      normalizeTags: true,    // optional improvement
+      normalize: true,
+      trim: true
+    });
 
-  return items.map((it) => ({
-    externalId: it.guid?._ || it.guid || null,
-    title: it.title,
-    company: it["dc:creator"] || "",
-    location: it.location || "",
-    description: it.description,
-    url: it.link,
-    postedAt: it.pubDate ? new Date(it.pubDate) : null,
-    raw: it
-  }));
+    const parsed = await parser.parseStringPromise(res.data);
+
+    return parsed.rss?.channel?.item || [];
+  } catch (err) {
+    console.error("FetchFeed Error:", err);
+    throw err;
+  }
 }
+
+// export { fetchFeed };

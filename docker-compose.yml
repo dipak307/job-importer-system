@@ -1,0 +1,97 @@
+# version: "3.9"
+
+# services:
+#   mongo:
+#     image: mongo:latest
+#     container_name: job-importer-system-mongo
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo-data:/data/db
+#     restart: always
+
+#   redis:
+#     image: redis:latest
+#     container_name: job-importer-system-redis
+#     ports:
+#       - "6379:6379"
+#     restart: always
+
+#   server:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile.server
+#     ports:
+#       - "5000:4000"
+#     env_file:
+#       - ./.env
+#     depends_on:
+#       - redis
+#       - mongo
+#     restart: always
+
+#   worker:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile.worker
+#     command: ["node", "workers/jobWorker.js"]
+#     env_file:
+#       - ./.env
+#     depends_on:
+#       - redis
+#       - mongo
+#       - server
+#     restart: always
+
+#   client:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile.client
+#     ports:
+#       - "5173:5173"
+#     env_file:
+#       - ./.env
+#     restart: always
+
+# volumes:
+#   mongo-data:
+
+
+
+
+# ////for production code 
+
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.server
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./.env
+    depends_on: []
+    restart: always
+
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.worker
+    command: ["node", "workers/jobWorker.js"]
+    env_file:
+      - ./.env
+    depends_on:
+      - server
+    restart: always
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.client
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./.env
+    restart: always
