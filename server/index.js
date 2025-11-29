@@ -130,7 +130,7 @@ app.use(express.json());
 
 import cors from "cors";
 app.use(cors({
-  origin: "*",
+  origin: ["*","https://job-importer-system-4.onrender.com"],
   methods: "GET,POST,PUT,DELETE",
   credentials: true
 }));
@@ -142,7 +142,7 @@ app.get("/health", (req, res) => res.send("OK"));
 
 const server = http.createServer(app);
 const io = new IOServer(server, {
-  cors: { origin: "http://localhost:3000", methods: ["GET","POST"] }
+  cors: { origin: ["*","https://job-importer-system-4.onrender.com"], methods: ["GET","POST"] }
 });
 
 const redisSub = new IORedis(process.env.REDIS_URL);

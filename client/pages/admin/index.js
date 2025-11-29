@@ -13,7 +13,7 @@ export default function AdminIndex() {
   
 
   useEffect(() => {
-    const socket = io("http://localhost:4000");
+    const socket = io("https://job-importer-system-1-9rls.onrender.com");
 
     socket.on("connect", () => {
       showToast("Connected to live server updates", "success");
