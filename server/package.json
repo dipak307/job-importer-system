@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "worker": "nodemon workers/jobWorker.js",
     "cron": "node cron/importCron.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "worker": "node src/workers/jobWorker.js"
   },
   "keywords": [],
   "author": "",
